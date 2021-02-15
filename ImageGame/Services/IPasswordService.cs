@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace ImageGame.Services
 {
-    interface IPasswordService
+    public interface IPasswordService
     {
-        public string hash(string password);
+        public string Hash(string password);
+        public bool Verify(string password, string hash);
     }
 }

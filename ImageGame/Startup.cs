@@ -25,6 +25,7 @@ namespace ImageGame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<IGameService, GameService>();
             services.AddDbContext<ImageGameDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllersWithViews();

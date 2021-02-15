@@ -8,10 +8,9 @@ namespace ImageGame.Services
 {
     public class GameService : IGameService
     {
-        public Game CreateGame(ImageGameDbContext context, Game game)
+        public Game CreateGame(ImageGameDbContext context, IPasswordService service, Game game)
         {
-            // TODO improve password encryption
-            game.Password = game.Password.GetHashCode().ToString();
+            game.Password = service.Hash(game.Password);
             context.Games.Add(game);
             context.SaveChanges();
             return game;
@@ -27,10 +26,10 @@ namespace ImageGame.Services
             return context.Games.Where(game => game.Id == gameId).FirstOrDefault();
         }
 
-        public Game UpdateGame(ImageGameDbContext context, int id, Game game)
+        public Game UpdateGame(ImageGameDbContext context, IPasswordService service, int id, Game game)
         {
             Game target = GetGameById(context, id);
-            target.copy(game);
+            target.Copy(service, game);
             context.SaveChanges();
             return target;
         }
@@ -43,11 +42,10 @@ namespace ImageGame.Services
             return game;
         }
 
-        public bool auth(ImageGameDbContext context, int gameId, string password)
+        public bool Auth(ImageGameDbContext context, IPasswordService service, int gameId, string password)
         {
-            // TODO improve password encryption
-            Game Game = GetGameById(context, gameId);
-            return Game.Password == password.GetHashCode().ToString();
+            Game game = GetGameById(context, gameId);
+            return service.Verify(password, game.Password);
         }
     }
 }
