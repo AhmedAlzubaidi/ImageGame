@@ -16,11 +16,10 @@ namespace ImageGame.Controllers
     public class GameController : ControllerBase
     {
         private readonly ImageGameDbContext Context;
-        private readonly GameService GameService;
+        private readonly IGameService GameService;
         private readonly IPasswordService PasswordService;
-        
 
-        public GameController(GameService gameService, IPasswordService passwordService, ImageGameDbContext context)
+        public GameController(IGameService gameService, IPasswordService passwordService, ImageGameDbContext context)
         {
             GameService = gameService;
             PasswordService = passwordService;

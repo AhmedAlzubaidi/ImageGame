@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImageGame.Services
 {
-    interface IGameService
+    public interface IGameService
     {
         public Game CreateGame(ImageGameDbContext context, IPasswordService service, Game game);
         public ICollection<Game> GetAllGames(ImageGameDbContext context);
