@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ImageGame.Data;
+using ImageGame.Models;
+using ImageGame.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,40 +11,60 @@ using System.Threading.Tasks;
 
 namespace ImageGame.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
     {
-        // GET: api/<GameController>
+        private readonly GameService Service;
+        private readonly ImageGameDbContext Context;
+
+        public GameController(GameService service, ImageGameDbContext context)
+        {
+            Service = service;
+            Context = context;
+        }
+
+        // GET: api/v1/<GameController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(Service.GetAllGames(Context));
         }
 
-        // GET api/<GameController>/5
+        // GET api/v1/<GameController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult Get(int id)
         {
-            return "value";
+            return Ok(Service.GetGameById(Context, id));
         }
 
-        // POST api/<GameController>
+        // POST api/v1/<GameController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Game game)
         {
+            // Todo validate request data
+            return Ok(Service.CreateGame(Context, game));
         }
 
-        // PUT api/<GameController>/5
+        // PUT api/v1/<GameController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Game game)
         {
+            // Todo validate request data
+            if (!Service.auth(Context, id, game.Password))
+                return Unauthorized();
+
+            return Ok(Service.UpdateGame(Context, id, game));
         }
 
-        // DELETE api/<GameController>/5
+        // DELETE api/v1/<GameController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id, [FromBody] string password)
         {
+            if(!Service.auth(Context, id, "password"))
+                return Unauthorized();
+
+            return Ok(Service.DeleteGameById(Context, id));
         }
     }
 }
