@@ -44,7 +44,6 @@ namespace ImageGame.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Game game)
         {
-            // Todo validate request data
             return Ok(GameService.CreateGame(Context, PasswordService, game));
         }
 
@@ -52,7 +51,6 @@ namespace ImageGame.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Game game)
         {
-            // Todo validate request data
             if (!GameService.Auth(Context, PasswordService, id, game.Password))
                 return Unauthorized();
 
