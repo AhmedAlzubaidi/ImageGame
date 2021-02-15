@@ -23,7 +23,7 @@ namespace ImageGame.Services
 
         public Game GetGameById(ImageGameDbContext context, int gameId)
         {
-            return context.Games.Where(game => game.Id == gameId).FirstOrDefault();
+            return context.Games.Find(gameId);
         }
 
         public Game UpdateGame(ImageGameDbContext context, IPasswordService service, int id, Game game)

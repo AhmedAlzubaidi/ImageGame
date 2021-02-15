@@ -2,10 +2,6 @@
 using ImageGame.Models;
 using ImageGame.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,7 +33,16 @@ namespace ImageGame.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            return Ok(GameService.GetGameById(Context, id));
+            Game game = GameService.GetGameById(Context, id);
+
+            if(game != null)
+            {
+                return Ok(game);
+            } else
+            {
+                return NotFound();
+            }
+            
         }
 
         // POST api/v1/<GameController>
@@ -51,6 +56,14 @@ namespace ImageGame.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Game game)
         {
+            Game target = GameService.GetGameById(Context, id);
+
+            if(target == null)
+            {
+                return NotFound();
+            }
+
+            // maybe pass target Game instead of querying it twice
             if (!GameService.Auth(Context, PasswordService, id, game.Password))
                 return Unauthorized();
 
@@ -61,7 +74,15 @@ namespace ImageGame.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id, [FromBody] string password)
         {
-            if(!GameService.Auth(Context, PasswordService, id, "password"))
+            Game target = GameService.GetGameById(Context, id);
+
+            if (target == null)
+            {
+                return NotFound();
+            }
+
+            // maybe pass target Game instead of querying it twice
+            if (!GameService.Auth(Context, PasswordService, id, "password"))
                 return Unauthorized();
 
             return Ok(GameService.DeleteGameById(Context, id));
