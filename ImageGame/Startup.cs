@@ -1,4 +1,5 @@
 using ImageGame.Data;
+using ImageGame.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -11,6 +12,9 @@ namespace ImageGame
 {
     public class Startup
     {
+        /**
+         * 4- do some testing using postman
+         */
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -21,6 +25,7 @@ namespace ImageGame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IGameService, GameService>();
             services.AddDbContext<ImageGameDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllersWithViews();
 
