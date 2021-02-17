@@ -7,7 +7,7 @@ export class Request {
         return data;
     }
 
-    static async gameById(gameID) {
+    static async getGamesById(gameID) {
         const response = await fetch(this.baseURL + '/' + gameID);
         const data = await response.json();
         return data;

@@ -19,7 +19,6 @@ export class GameList extends Component {
 
     componentDidMount() {
         this.populateGames();
-        console.log(this.state.games);
     }
 
     static renderGames(games) {
@@ -42,10 +41,6 @@ export class GameList extends Component {
         let gameList = this.state.loading
         ? <p><em>Loading...</em></p>
         : GameList.renderGames(this.state.games);
-
-        if(!this.state.loading) {
-            console.log(this.state.games);
-        }
 
         return (
             <div>
