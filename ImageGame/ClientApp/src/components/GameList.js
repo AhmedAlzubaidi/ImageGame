@@ -26,8 +26,13 @@ export class GameList extends Component {
         return (
             <div className="row">
                 {games.map(game =>
-                    <div className="col-sm-4">
-                        <a href={"http://localhost:4264/games/" + game.id + "/play"}><img src="https://cdn.streamelements.com/uploads/48b128a2-719b-43ff-97fb-aaba95d3c227.gif" className="rounded mb-4 mx-auto img-fluid d-block" alt="Good Luck"></img></a>
+                    <div className="col-sm-4 card">
+                        <a href={"http://localhost:4264/games/" + game.id + "/play"}>
+                            <img className="mt-3 card-img-top" src="https://cdn.streamelements.com/uploads/48b128a2-719b-43ff-97fb-aaba95d3c227.gif" alt="Game image"></img>
+                        </a>
+                        <div className="card-body">
+                            <h5 className="card-title">{game.name}</h5>
+                        </div>
                     </div>
                 )}
             </div>
