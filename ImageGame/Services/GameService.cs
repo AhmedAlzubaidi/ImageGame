@@ -1,5 +1,6 @@
 ﻿using ImageGame.Data;
 using ImageGame.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,12 @@ namespace ImageGame.Services
 
         public ICollection<Game> GetAllGames(ImageGameDbContext context)
         {
-            return context.Games.ToList();
+            return context.Games.Include(game => game.Images).ToList();
         }
 
         public Game GetGameById(ImageGameDbContext context, int gameId)
         {
-            return context.Games.Find(gameId);
+            return context.Games.Include(game => game.Images).FirstOrDefault(game => game.Id == gameId);
         }
 
         public Game UpdateGame(ImageGameDbContext context, IPasswordService service, int id, Game game)

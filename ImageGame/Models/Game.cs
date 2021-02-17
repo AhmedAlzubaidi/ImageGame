@@ -21,7 +21,7 @@ namespace ImageGame.Models
 
         [Required]
         [MinLength(2)]
-        public ICollection<Image> Images { get; set; };
+        public ICollection<Image> Images { get; set; }
 
         public bool Copy(IPasswordService service, Game game)
         {

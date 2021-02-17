@@ -12,9 +12,6 @@ namespace ImageGame
 {
     public class Startup
     {
-        /**
-         * 4- do some testing using postman
-         */
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
