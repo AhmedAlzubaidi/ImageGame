@@ -1,12 +1,14 @@
 export class Request {
-    async games() {
-        const response = await fetch('game');
+    static baseURL = 'api/v1/game';
+
+    static async getGames() {
+        const response = await fetch(this.baseURL);
         const data = await response.json();
         return data;
     }
 
-    async gameById(gameID) {
-        const response = await fetch('game/' + gameID);
+    static async gameById(gameID) {
+        const response = await fetch(this.baseURL + '/' + gameID);
         const data = await response.json();
         return data;
     }
