@@ -27,6 +27,16 @@ namespace ImageGame
             services.AddDbContext<ImageGameDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllersWithViews();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "enable_localhost",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost")
+                                      .AllowAnyHeader().AllowAnyOrigin();
+                                  });
+            });
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -48,7 +58,7 @@ namespace ImageGame
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            app.UseCors("enable_localhost");
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -64,7 +74,7 @@ namespace ImageGame
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    // spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
         }

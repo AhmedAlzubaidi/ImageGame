@@ -1,5 +1,5 @@
 export class Request {
-    static baseURL = 'api/v1/game';
+    static baseURL = 'http://localhost:4264/api/v1/game';
 
     static async getGames() {
         const response = await fetch(this.baseURL);

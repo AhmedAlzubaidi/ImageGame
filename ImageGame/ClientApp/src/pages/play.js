@@ -33,10 +33,7 @@ export class Play extends Component {
         const length = this.state.game.images.length;
         const index = Math.floor(Math.random() * length); // maybe make sure it isn't equal to currentImage
         this.setState({
-            game: this.state.game,
-            gameID: this.state.gameID,
-            currentImage: index,
-            loading: this.state.loading
+            currentImage: index
         });
         this.picks++;
 

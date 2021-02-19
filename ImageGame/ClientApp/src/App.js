@@ -4,11 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './pages/index';
 import { Play } from './pages/play';
 
-import './custom.css'
-
-/* <Route exact path='/' component={Home} />
-<Route path='/counter' component={Counter} />
-<Route path='/fetch-data' component={FetchData} /> */
+import './custom.css';
 
 export default class App extends Component {
     static displayName = App.name;
